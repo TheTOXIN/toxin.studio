@@ -61,6 +61,45 @@
         label {
             font-size: 20px;
         }
+        .progress-container {
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto 1.5rem auto;
+            background: #222;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px #000a;
+            padding: 6px;
+            position: relative;
+        }
+        .progress-bar {
+            height: 32px;
+            border-radius: 16px;
+            background: linear-gradient(90deg, #1E90FF 0%, #00FFB0 100%);
+            width: 0%;
+            transition: width 1s cubic-bezier(.4,2,.6,1);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 1px 6px #0006;
+        }
+        .progress-label {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            pointer-events: none;
+            text-shadow: 0 1px 4px #000a;
+        }
     </style>
 </head>
 <body>
@@ -75,7 +114,21 @@
     <img src="TOXIN_PNG.png" alt="Логотип" />
 
     <h1>🛑 СБОР НА BATTLEMEME 3:</h1>
-    <label>0 ₽ / 100.000 ₽ (с учетом бусти и крипты)</label>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-label" id="progressLabel"></div>
+    </div>
+    <script>
+        // Настройки сбора
+        const currentAmount = 1000; // текущая сумма
+        const goalAmount = 100000; // цель
+        const progressBar = document.getElementById('progressBar');
+        const progressLabel = document.getElementById('progressLabel');
+        const percent = Math.min((currentAmount / goalAmount) * 100, 100);
+        progressBar.style.width = percent + '%';
+        progressLabel.textContent = `${currentAmount.toLocaleString('ru-RU')} ₽ / ${goalAmount.toLocaleString('ru-RU')} ₽`;
+    </script>
+    <label>(сумма заполняется вручную, с учетом бусти и крипты)</label>
     <ul style="list-style-type: none; padding: 0;">
         <li><a href="https://www.donationalerts.com/r/toxinstudio" target="_blank">Донат алертс</a></li>
             <li><a href="https://new.donatepay.ru/@toxinstudio" target="_blank">Донат пей</a></li>
