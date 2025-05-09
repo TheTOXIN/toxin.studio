@@ -5,78 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="TOXIN_LOGO.png">
     <title>TOXIN STUDIO</title>
+    <!-- FontAwesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         html, body {
             height: 100%;
         }
         body {
-            color: rgb(255, 255, 255);
-            font-family: Arial, sans-serif;
-            text-align: center; /* Центрируем текст */
+            color: #fff;
+            font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            position: relative;
-            overflow: hidden; /* Скрываем все, что выходит за пределы */
-            overflow-y: scroll;
-            background-color: #000000;
+            min-height: 100vh;
+            background: #000;
+            overflow-x: hidden;
         }
         video {
             position: fixed;
             top: 50%;
             left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Устанавливаем видео на задний план */
+            min-width: 100vw;
+            min-height: 100vh;
+            width: auto;
+            height: auto;
+            z-index: -2;
             transform: translate(-50%, -50%);
-            object-fit: cover; /* Обеспечивает обрезку видео, чтобы заполнить экран */
+            object-fit: cover;
         }
-        a {
-            color: #1E90FF; /* Цвет ссылок */
-            text-decoration: none; /* Убираем подчеркивание */
-            filter: drop-shadow(5px 5px 10px #000000);
-            font-size: 20px;
+        .glass {
+            background: rgba(20, 20, 20, 0.55);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            margin: 2rem auto 1.5rem auto;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            max-width: 480px;
+            width: 95%;
+            transition: box-shadow 0.3s, opacity 0.7s, transform 0.7s;
+            opacity: 0;
+            transform: translateY(40px);
         }
-        a:hover {
-            text-decoration: underline; /* Подчеркивание при наведении */
+        .glass:hover {
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
         }
-        img {
-            width: 128px; /* Ширина логотипа */
-            height: auto; /* Автоматическая высота для сохранения пропорций */
-            margin-top: 1rem;
-            filter: drop-shadow(5px 5px 10px #000000);
+        .glass.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .glass.donates {
+            margin-top: 0;
+            text-align: center;
+        }
+        .logo {
+            width: 120px;
+            margin: 2rem auto 1rem auto;
+            display: block;
+            filter: drop-shadow(0 4px 24px #bd0000cc);
+            border-radius: 16px;
+            transition: transform 0.4s cubic-bezier(.4,2,.6,1);
+        }
+        .logo:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 4px 24px #bd0000cc);
+            box-shadow: none;
+        }
+        @keyframes logo-rotate {
+            0% { transform: scale(1.15) rotate(0deg); }
+            100% { transform: scale(1.15) rotate(360deg); }
+        }
+        .logo.rotating {
+            animation: logo-rotate 0.7s cubic-bezier(.4,2,.6,1);
         }
         h1 {
-            margin: 20px 0; /* Отступы для заголовков */
-            filter: drop-shadow(5px 5px 10px #000000);
-        }
-        ::-webkit-scrollbar {
-             display: none;
-        }
-        .footer {
-            height: 32px;
-            width: 100%;
-        }
-        label {
-            font-size: 20px;
+            margin: 0 0 1.5rem 0;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 12px #000a;
         }
         .progress-container {
-            width: 90%;
-            max-width: 500px;
-            margin: 0 auto 1.5rem auto;
-            background: #222;
+            width: 100%;
+            background: rgba(34,34,34,0.7);
             border-radius: 20px;
             box-shadow: 0 2px 10px #000a;
-            padding: 6px;
+            padding: 8px 0;
             position: relative;
+            margin-bottom: 1.2rem;
         }
         .progress-bar {
             height: 32px;
             border-radius: 16px;
-            background: linear-gradient(90deg, #1E90FF 0%, #00FFB0 100%);
+            background: linear-gradient(90deg, #1E90FF 0%, #bd0000 50%, #1E90FF 100%);
+            background-size: 200% 100%;
+            animation: progress-gradient-move 2.5s linear infinite;
             width: 0%;
-            transition: width 1s cubic-bezier(.4,2,.6,1);
+            transition: width 1.2s cubic-bezier(.4,2,.6,1);
             display: flex;
             align-items: center;
             justify-content: flex-end;
@@ -84,6 +108,11 @@
             font-weight: bold;
             font-size: 18px;
             box-shadow: 0 1px 6px #0006;
+            position: relative;
+        }
+        @keyframes progress-gradient-move {
+            0% { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
         }
         .progress-label {
             position: absolute;
@@ -100,24 +129,216 @@
             pointer-events: none;
             text-shadow: 0 1px 4px #000a;
         }
+        .progress-icon {
+            margin-right: 10px;
+            font-size: 1.3em;
+            filter: drop-shadow(0 2px 6px #000a);
+        }
+        .links-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 1.2rem 0 0 0;
+            padding: 0;
+            list-style: none;
+        }
+        .link-card {
+            background: rgba(30, 144, 255, 0.12);
+            border-radius: 16px;
+            padding: 0.7rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 1.15rem;
+            color: #fff !important;
+            text-decoration: none;
+            box-shadow: 0 2px 8px #0004;
+            transition: background 0.2s, transform 0.2s;
+            font-weight: 500;
+        }
+        .link-card:hover {
+            background: rgba(189,0,0,0.18);
+            transform: translateY(-2px) scale(1.04);
+            color: #fff !important;
+        }
+        .link-card:hover i:not(.fa-copy) {
+            color: #bd0000 !important;
+        }
+        .link-card i {
+            font-size: 1.5em;
+            min-width: 1.5em;
+            color: #1E90FF !important;
+        }
+        .link-card[href*="donationalerts"],
+        .link-card[href*="donatepay"] {
+            color: #bd0000;
+        }
+        .link-card[href*="boosty"] {
+            color: #bd0000;
+        }
+        .link-card[href*="telegram"],
+        .link-card[href*="vk.com"],
+        .link-card[href*="tiktok"],
+        .link-card[href*="instagram"],
+        .link-card[href*="twitch"],
+        .link-card[href*="youtube"],
+        .link-card[href*="x.com"],
+        .link-card[href*="rutube"],
+        .link-card[href*="memealerts"] {
+            color: #1E90FF;
+        }
+        .crypto-list {
+            margin: 0.5rem 0 0 0;
+            padding: 0;
+            list-style: none;
+            color: #fff;
+            font-size: 1.1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .crypto-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            background: rgba(30, 144, 255, 0.08);
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.7rem;
+            font-size: 1.08rem;
+            position: relative;
+            min-width: 320px;
+            max-width: 100%;
+            word-break: break-all;
+        }
+        .crypto-item i {
+            color: #ffb300 !important;
+        }
+        .crypto-copy-btn {
+            background: #1E90FF;
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            padding: 0.3rem 0.7rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .crypto-copy-btn:hover {
+            background: #1566b3;
+        }
+        .crypto-copy-btn i {
+            margin-left: 0.3rem;
+            font-size: 1.1em;
+            color: #fff !important;
+        }
+        .section-title {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.7rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: #fff;
+            text-align: center;
+            text-shadow: 0 4px 18px #000a, 0 2px 8px #bd000088;
+        }
+        .footer {
+            height: 32px;
+            width: 100%;
+        }
+        label {
+            font-size: 1rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        @media (max-width: 600px) {
+            .glass {
+                padding: 1.2rem 0.5rem 1rem 0.5rem;
+            }
+            .logo {
+                width: 80px;
+            }
+            h1 {
+                font-size: 1.2rem;
+            }
+            .progress-label, .progress-bar {
+                font-size: 1rem;
+            }
+        }
+        .boosty-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-    <!-- Фоновое видео -->
     <video autoplay muted loop>
-        <!-- <source src="your_video.mp4" type="video/mp4"> -->
         <source src="TOXIN_COVER_BACK.webm" type="video/webm">
         Ваш браузер не поддерживает видео.
     </video>
-
-    <!-- Логотип -->
-    <img src="TOXIN_PNG.png" alt="Логотип" />
-
-    <h1>🛑 СБОР НА BATTLEMEME 3:</h1>
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-        <div class="progress-label" id="progressLabel"></div>
+    <img src="TOXIN_PNG.png" alt="Логотип" class="logo" />
+    <div class="glass donates">
+        <h1><span class="progress-icon"></span>🛑СБОР НА BATTLEMEME 3</h1>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-label" id="progressLabel"></div>
+        </div>
+        <label>(сумма заполняется вручную, с учетом бусти и крипты)</label>
+        <ul class="links-list">
+            <li><a class="link-card" href="https://www.donationalerts.com/r/toxinstudio" target="_blank"><i class="fa-solid fa-ruble-sign"></i>Донат алертс</a></li>
+            <li><a class="link-card" href="https://new.donatepay.ru/@toxinstudio" target="_blank"><i class="fa-solid fa-coins"></i>Донат пей</a></li>
+        </ul>
     </div>
+    <div class="glass">
+        <div class="section-title">⚡ Эксклюзивный контент</div>
+        <div class="boosty-center">
+            <a class="link-card" href="https://boosty.to/toxin.studio" target="_blank"><i class="fa-solid fa-bolt"></i>Бусти</a>
+        </div>
+    </div>
+    <div class="glass">
+        <div class="section-title">🌐 Мои ссылки</div>
+        <ul class="links-list">
+            <li><a class="link-card" href="https://t.me/toxin_studio" target="_blank"><i class="fa-brands fa-telegram"></i>Телега</a></li>
+            <li><a class="link-card" href="https://vk.com/toxin.studio" target="_blank"><i class="fa-brands fa-vk"></i>ВК группа</a></li>
+            <li><a class="link-card" href="https://vk.com/video/@toxin.studio" target="_blank"><i class="fa-solid fa-video"></i>ВК видео</a></li>
+            <li><a class="link-card" href="https://live.vkvideo.ru/toxinstudio" target="_blank"><i class="fa-solid fa-broadcast-tower"></i>ВК лайв</a></li>
+            <li><a class="link-card" href="https://www.tiktok.com/@toxin.studio" target="_blank"><i class="fa-brands fa-tiktok"></i>Тик ток</a></li>
+            <li><a class="link-card" href="https://www.instagram.com/toxin.studio" target="_blank"><i class="fa-brands fa-instagram"></i>Инста</a></li>
+            <li><a class="link-card" href="https://www.twitch.tv/toxinstudio" target="_blank"><i class="fa-brands fa-twitch"></i>Твич</a></li>
+            <li><a class="link-card" href="https://www.youtube.com/@TOXINSTUDIO" target="_blank"><i class="fa-brands fa-youtube"></i>Ютуб</a></li>
+            <li><a class="link-card" href="https://x.com/toxin_studio" target="_blank"><i class="fa-brands fa-x-twitter"></i>X (твиттер)</a></li>
+            <li><a class="link-card" href="https://rutube.ru/channel/38935121" target="_blank"><i class="fa-solid fa-film"></i>Рутуб</a></li>
+            <li><a class="link-card" href="https://memealerts.com/toxinstudio" target="_blank"><i class="fa-solid fa-face-laugh"></i>Мемы</a></li>
+        </ul>
+    </div>
+    <div class="glass">
+        <div class="section-title">💬 Контакты для связи</div>
+        <ul class="links-list">
+            <li><a class="link-card" href="https://t.me/YuriBelousOff" target="_blank"><i class="fa-brands fa-telegram"></i>Telegram</a></li>
+            <li><a class="link-card" href="mailto:yuri.belousov@toxinstudio.ru"><i class="fa-solid fa-envelope"></i>yuri.belousov@toxinstudio.ru</a></li>
+        </ul>
+    </div>
+    <div class="glass">
+        <div class="section-title">💲Крипта</div>
+        <ul class="crypto-list">
+            <li class="crypto-item"><i class="fa-brands fa-btc"></i>BTC: 1FjcYxrht4V1v3rTuFCGoabFR54zVCic8u
+                <button class="crypto-copy-btn" onclick="copyCrypto('1FjcYxrht4V1v3rTuFCGoabFR54zVCic8u', this)"><i class='fa-regular fa-copy'></i></button>
+            </li>
+            <li class="crypto-item"><i class="fa-solid fa-coins"></i>USDT (TRC20): TV1XNe7WgwetjQsCiDhTXMJchwdFUZTuor
+                <button class="crypto-copy-btn" onclick="copyCrypto('TV1XNe7WgwetjQsCiDhTXMJchwdFUZTuor', this)"><i class='fa-regular fa-copy'></i></button>
+            </li>
+        </ul>
+    </div>
+    <div class="footer"></div>
     <script>
         // Настройки сбора
         const currentAmount = 1000; // текущая сумма
@@ -125,45 +346,42 @@
         const progressBar = document.getElementById('progressBar');
         const progressLabel = document.getElementById('progressLabel');
         const percent = Math.min((currentAmount / goalAmount) * 100, 100);
-        progressBar.style.width = percent + '%';
+        setTimeout(() => {
+            progressBar.style.width = percent + '%';
+        }, 300);
         progressLabel.textContent = `${currentAmount.toLocaleString('ru-RU')} ₽ / ${goalAmount.toLocaleString('ru-RU')} ₽`;
+
+        function copyCrypto(address, btn) {
+            navigator.clipboard.writeText(address).then(() => {
+                const old = btn.innerHTML;
+                btn.innerHTML = "<i class='fa-solid fa-check'></i>";
+                btn.disabled = true;
+                setTimeout(() => {
+                    btn.innerHTML = old;
+                    btn.disabled = false;
+                }, 1200);
+            });
+        }
+
+        // Анимация появления карточек при прокрутке
+        function revealOnScroll() {
+            const cards = document.querySelectorAll('.glass');
+            const trigger = window.innerHeight * 0.92;
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < trigger) {
+                    card.classList.add('visible');
+                }
+            });
+        }
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('DOMContentLoaded', revealOnScroll);
+
+        // Вращение логотипа при клике
+        document.querySelector('.logo').addEventListener('click', function() {
+            this.classList.add('rotating');
+            setTimeout(() => this.classList.remove('rotating'), 700);
+        });
     </script>
-    <label>(сумма заполняется вручную, с учетом бусти и крипты)</label>
-    <ul style="list-style-type: none; padding: 0;">
-        <li><a href="https://www.donationalerts.com/r/toxinstudio" target="_blank">Донат алертс</a></li>
-            <li><a href="https://new.donatepay.ru/@toxinstudio" target="_blank">Донат пей</a></li>
-    </ul>
-
-    <h1>⚡ Эксклюзивный контент:</h1>
-    <a href="https://boosty.to/toxin.studio" target="_blank">Бусти</a>
-    
-    <h1>🌐 Мои ссылки:</h1>
-    <ul style="list-style-type: none; padding: 0;">
-        <li><a href="https://t.me/toxin_studio" target="_blank">Телега</a></li>
-        <li><a href="https://vk.com/toxin.studio" target="_blank">ВК группа</a></li>
-        <li><a href="https://vk.com/video/@toxin.studio" target="_blank">ВК видео</a></li>
-        <li><a href="https://live.vkvideo.ru/toxinstudio" target="_blank">ВК лайв</a></li>
-        <li><a href="https://www.tiktok.com/@toxin.studio" target="_blank">Тик ток</a></li>
-        <li><a href="https://www.instagram.com/toxin.studio" target="_blank">Инста</a></li>
-        <li><a href="https://www.twitch.tv/toxinstudio" target="_blank">Твич</a></li>
-        <li><a href="https://www.youtube.com/@TOXINSTUDIO" target="_blank">Ютуб</a></li>
-        <li><a href="https://x.com/toxin_studio" target="_blank">X (твиттер)</a></li>
-        <li><a href="https://rutube.ru/channel/38935121" target="_blank">Рутуб</a></li>
-        <li><a href="https://memealerts.com/toxinstudio" target="_blank">Мемы</a></li>
-    </ul>
-
-    <h1>💬 Контакты для связи:</h1>
-    <ul style="list-style-type: none; padding: 0;">
-        <li><a href="https://t.me/YuriBelousOff" target="_blank">Telegram</a></li>
-        <li><a href="mailto:yuri.belousov@toxinstudio.ru">yuri.belousov@toxinstudio.ru</a></li>
-    </ul>
-
-    <h1>💲Крипта:</h1>
-    <ul style="list-style-type: none; padding: 0;">
-        <li>BTC: 1FjcYxrht4V1v3rTuFCGoabFR54zVCic8u</li>
-        <li>USDT (TRC20): TV1XNe7WgwetjQsCiDhTXMJchwdFUZTuor</li>
-    </ul>
-
-    <div class="footer"></div>
 </body>
 </html>
