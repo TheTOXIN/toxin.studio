@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-web-nginx
+spec:
+  selector:
+    matchLabels:
+      app: k8s-web-nginx
+  template:
+    metadata:
+      labels:
+        app: k8s-web-nginx
+    spec:
+      containers:
+      - name: k8s-web-nginx
+        image: thet0xin/k8s-web-nginx:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 3000
