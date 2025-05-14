@@ -288,10 +288,10 @@
     <img src="TOXIN_PNG.png" alt="Логотип" class="logo" />
     <div class="glass donates">
         <h1><span class="progress-icon"></span>🛑СБОР НА BATTLEMEME 3</h1>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
-            <div class="progress-label" id="progressLabel"></div>
-        </div>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-label" id="progressLabel"></div>
+    </div>
         <label>(сумма заполняется вручную, с учетом бусти и крипты)</label>
         <ul class="links-list">
             <li><a class="link-card" href="https://www.donationalerts.com/r/toxinstudio" target="_blank"><i class="fa-solid fa-ruble-sign"></i>Донат алертс</a></li>
@@ -347,7 +347,7 @@
         const progressLabel = document.getElementById('progressLabel');
         const percent = Math.min((currentAmount / goalAmount) * 100, 100);
         setTimeout(() => {
-            progressBar.style.width = percent + '%';
+        progressBar.style.width = percent + '%';
         }, 300);
         progressLabel.textContent = `${currentAmount.toLocaleString('ru-RU')} ₽ / ${goalAmount.toLocaleString('ru-RU')} ₽`;
 
