@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: uuid-ossp
+      author: TheTOXIN
+      changes:
+        - sql:
+            sql: CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+  - changeSet:
+      id: create_goals_table
+      author: TheTOXIN
+      changes:
+        - createTable:
+            tableName: goals
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  defaultValueComputed: "uuid_generate_v4()"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(254)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: NUMERIC(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: donate
+                  type: NUMERIC(19,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: true
+  - changeSet:
+      id: create_goals_row_1
+      author: TheTOXIN
+      changes:
+        - insert:
+            tableName: goals
+            columns:
+              - column:
+                  name: title
+                  value: "СБОР НА BATTLEMEME 3"
+              - column:
+                  name: value
+                  valueNumeric: 100000.00
+              - column:
+                  name: donate
+                  valueNumeric: 1000.00
