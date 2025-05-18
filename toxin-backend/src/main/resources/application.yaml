@@ -6,7 +6,7 @@ spring:
     name: toxin-backend
 
   datasource:
-    url: jdbc:postgresql://${SPRING_DATASOURCE_HOST:localhost}:5432/toxin
+    url: jdbc:postgresql://${SPRING_DATASOURCE_HOST:toxin-postgres}:5432/database
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver

@@ -1,0 +1,45 @@
+services:
+  toxin-backend:
+    build:
+      context: ./toxin-backend
+    container_name: toxin-backend
+    depends_on:
+      - toxin-postgres
+    networks:
+      - toxin-network
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_HOST: toxin-postgres
+
+  toxin-frontend:
+    build:
+      context: ./toxin-frontend
+    container_name: toxin-frontend
+    depends_on:
+      - toxin-backend
+    networks:
+      - toxin-network
+    ports:
+      - "4200:80"
+
+  toxin-postgres:
+    image: postgres:17
+    container_name: toxin-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+    networks:
+      - toxin-network
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+networks:
+  toxin-network:
+    driver: bridge
