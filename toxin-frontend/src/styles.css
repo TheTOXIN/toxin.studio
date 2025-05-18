@@ -1,1 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%;
+}
+body {
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: #000;
+  overflow-x: hidden;
+}
+video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100vw;
+  min-height: 100vh;
+  width: auto;
+  height: auto;
+  z-index: -2;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+a {
+  color: #1E90FF; /* Цвет ссылок */
+  text-decoration: none; /* Убираем подчеркивание */
+  filter: drop-shadow(5px 5px 10px #000000);
+  font-size: 20px;
+}
+
+a:hover {
+  text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+img {
+  width: 128px; /* Ширина логотипа */
+  height: auto; /* Автоматическая высота для сохранения пропорций */
+  margin-top: 1rem;
+  filter: drop-shadow(5px 5px 10px #000000);
+}
+
+h1 {
+  margin: 0 0 1.5rem 0;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 12px #000a;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+label {
+  font-size: 1rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.2rem;
+  }
+}
