@@ -1,5 +1,6 @@
 package com.toxin.backend;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
@@ -13,12 +14,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     @Bean
-    public ReactiveRedisTemplate<String, Goal> userRedisTemplate(ReactiveRedisConnectionFactory connectionFactory) {
+    public ReactiveRedisTemplate<String, Goal> userRedisTemplate(
+            ReactiveRedisConnectionFactory connectionFactory,
+            ObjectMapper objectMapper
+    ) {
         return new ReactiveRedisTemplate<>(
                 connectionFactory,
                 RedisSerializationContext.<String, Goal>newSerializationContext(new StringRedisSerializer())
                         .key(RedisSerializer.string())
-                        .value(new Jackson2JsonRedisSerializer<>(Goal.class))
+                        .value(new Jackson2JsonRedisSerializer<>(objectMapper, Goal.class))
                         .build()
         );
     }
