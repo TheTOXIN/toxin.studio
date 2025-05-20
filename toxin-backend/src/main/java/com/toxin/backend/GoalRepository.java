@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+//TODO r2dbc ?
 @Repository
 public interface GoalRepository extends JpaRepository<Goal, UUID> {
 

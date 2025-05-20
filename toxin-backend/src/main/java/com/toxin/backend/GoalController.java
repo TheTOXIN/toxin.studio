@@ -13,7 +13,7 @@ public class GoalController {
 
     @GetMapping("/last")
     public Mono<GoalDTO> findLast() {
-        return Mono.just(goalService.findLast());
+        return goalService.findLast();
     }
 
     @PostMapping("/create")

@@ -1,5 +1,6 @@
 package com.toxin.backend;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -34,7 +35,8 @@ public class Goal {
     @Column(name = "donate", nullable = false)
     private BigDecimal donate;
 
+    @JsonIgnore
     @CreatedDate
     @Column(name = "created", insertable = false, updatable = false, nullable = false)
-    private LocalDateTime created;
+    private LocalDateTime created; //TODO not work with Jackson
 }
