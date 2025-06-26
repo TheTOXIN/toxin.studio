@@ -1,4 +1,4 @@
-package com.toxin.backend;
+package com.toxin.backend.goal;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;

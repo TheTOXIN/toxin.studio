@@ -1,4 +1,4 @@
-package com.toxin.backend;
+package com.toxin.backend.goal;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

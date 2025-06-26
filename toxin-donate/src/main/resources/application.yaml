@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: toxin-donate
+
+kafka:
+  connection:
+    bootstrap-servers: localhost:9092
+  producer:
+    name: donations-producer
+    acks: all
+    retries: 3
+    idempotence: true
+  topic:
+    name: donations-topic
+    partitions: 3
+    replication-factor: 1
+    min-in-sync-replicas: 1
+
+app:
+  donate:
+    cron: "0/15 * * * * ?"
+

@@ -1,4 +1,4 @@
-package com.toxin.backend;
+package com.toxin.backend.goal;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

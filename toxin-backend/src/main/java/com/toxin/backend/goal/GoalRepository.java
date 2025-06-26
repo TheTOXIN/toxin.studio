@@ -1,4 +1,4 @@
-package com.toxin.backend;
+package com.toxin.backend.goal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

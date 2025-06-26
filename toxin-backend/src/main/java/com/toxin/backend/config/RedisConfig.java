@@ -1,6 +1,7 @@
-package com.toxin.backend;
+package com.toxin.backend.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.toxin.backend.goal.Goal;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;

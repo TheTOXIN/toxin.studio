@@ -1,4 +1,4 @@
-package com.toxin.backend;
+package com.toxin.backend.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

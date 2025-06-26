@@ -1,4 +1,4 @@
-package com.toxin.backend;
+package com.toxin.backend.goal;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
