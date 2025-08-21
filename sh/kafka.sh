@@ -1,2 +1,3 @@
 docker exec -it toxin-kafka kafka-topics --delete --topic donations-topic --bootstrap-server localhost:9092
 docker exec -it toxin-kafka kafka-topics --create --topic donations-topic --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1 --min-insync-replicas 1
+docker exec -it toxin-kafka kafka-topics --describe --topic donations-topic --bootstrap-server localhost:29092

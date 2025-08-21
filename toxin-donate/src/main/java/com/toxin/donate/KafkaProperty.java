@@ -32,7 +32,7 @@ public class KafkaProperty {
     public static class KafkaPropertyProducer {
         private String name;
         private String acks;
-        private String retries;
+        private int retries;
         private String idempotence;
     }
 
